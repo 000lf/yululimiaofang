@@ -1,0 +1,455 @@
+<<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>"梨"好山西，“玉”见甜蜜</title>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-image: url('背景2.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        /* 封面样式 */
+       .cover {
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: rgba(245, 244, 244, 0.957);
+        }
+
+       .cover h1 {
+            font-size: 4em;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+       .cover p {
+            font-size: 1.5em;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: fadeInUp 1s ease-out 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 导航栏样式 */
+        header {
+            background-color: rgba(12, 16, 2, 0.7);
+            color: rgb(176, 175, 175);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color 0.3s ease;
+        }
+
+       .logo-container {
+            margin-right: 30px;
+            background-color: rgba(11, 11, 11, 0.7); /* 设置 logo 容器背景颜色与导航栏一致 */
+        }
+
+       .logo {
+            width: 120px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+       .logo:hover {
+            transform: scale(1.1);
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: rgb(236, 235, 234);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 各板块通用样式 */
+       .section {
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 1000px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+       .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* IP 形象样式 */
+       .ip-image {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        /* 产地信息和产品介绍排版样式 */
+       .info-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+       .info-text {
+            flex: 1;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+       .info-text p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+       .slider-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+       .slider {
+            display: flex;
+            width: fit-content;
+            transition: transform 0.5s ease;
+        }
+
+       .slider img {
+            min-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        /* 深加工产品样式 */
+       .derivative-products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+       .derivative-product {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+       .derivative-product img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* 文创周边样式 */
+       .cultural-products {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+       .cultural-products img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        /* 联系我们表单样式 */
+        form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form input[type="submit"] {
+            background-color: #333;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+           .info-container {
+                flex-direction: column;
+            }
+
+           .derivative-products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+           .cultural-products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 封面 -->
+    <div class="cover">
+        <h1>“梨”好山西，“玉”见甜蜜</h1>
+        <p>开启香梨产业新篇章</p>
+    </div>
+
+    <!-- 导航栏 -->
+    <header>
+        <div class="logo-container">
+            <a href="#">
+                <!-- 修改 logo 图片路径 -->
+                <img class="logo" src="logo.png" alt="项目 logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#origin-info">产地信息</a></li>
+                <li><a href="#product-intro">产品介绍</a></li>
+                <li><a href="#derivative-products">深加工产品</a></li>
+                <li><a href="#cultural-products">文创周边</a></li>
+                <li><a href="#contact-us">联系我们</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 产地信息 -->
+    <section id="origin-info" class="section">
+        <h2 data-title="产地信息"></h2>
+        <div class="info-container">
+            <div class="info-text">
+                <p>史大合村——玉露香梨的甜蜜故乡</p>
+                <p>史大合村，这片位于山西省寿阳县的神奇土地，是孕育玉露香梨的摇篮。这里气候宜人，四季分明，充足的光照和适宜的昼夜温差，为玉露香梨的生长提供了得天独厚的自然条件。肥沃的土壤富含多种矿物质，如同甘甜的乳汁，滋养着每一棵梨树茁壮成长。</p>
+                <p>凭借着这样优越的地理环境，史大合村的玉露香梨种植规模不断扩大，成为了村民们的主要经济来源。每到收获季节，漫山遍野的梨树挂满了沉甸甸的果实，空气中弥漫着清甜的果香，那一个个饱满圆润、色泽诱人的玉露香梨，仿佛在诉说着大自然的慷慨馈赠。</p>
+                <p>然而，曾经的史大合村，因地处偏远，交通不便，玉露香梨的销售面临着重重困境。但如今，在电商的助力下，史大合村正迎来新的发展机遇。我们致力于将史大合村的玉露香梨推向更广阔的市场，让更多人品尝到这份来自乡村的甜蜜。</p>
+            </div>
+            <div class="slider-container">
+                <div class="slider" id="origin-slider">
+                    <img src="3.jpg" alt="产地图片 1">
+                    <img src="4.jpg" alt="产地图片 2">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品介绍 -->
+    <section id="product-intro" class="section">
+        <h2 data-title="产品介绍"></h2>
+        <div class="info-container">
+            <div class="slider-container">
+                <div class="slider" id="product-slider">
+                    <img src="5.jpg" alt="产品图片 1">
+                    <img src="6.jpg" alt="产品图片 2">
+                    <img src="7.jpg" alt="产品图片 3">
+                    <img src="8.jpg" alt="产品图片 4">
+                </div>
+            </div>
+            <div class="info-text">
+                <p>玉露香梨果实大，近球形，果面光洁细腻具蜡质，保水性强；味道香甜，口感佳，果实耐贮藏；含水量高，热量低，富含维生素 C、膳食纤维、钾、钙等多种营养成分，具有润肺止咳、清热降火、促进消化等作用。因以库尔勒香梨为母本、雪花梨为父本杂育而成，而且果肉白嫩，肉质似雪，所以取名为玉露香梨。</p>
+                <p>玉露香梨在中国北京平谷区、山西隰县、寿阳县、太谷县、汾西县均有种植，是山西省农科院果树研究所杂交育成的优质中熟梨新品种。2008 年，玉露香梨是北京奥运会官方指定用梨；2013 年，玉露香梨在“第十一届中华名梨·全国梨王擂台赛”中，获得了“中国梨王”称号。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 深加工产品 -->
+    <section id="derivative-products" class="section">
+        <h2 data-title="深加工产品"></h2>
+        <div class="derivative-products">
+            <div class="derivative-product">
+                <img src="衍生1.jpg" alt="玉露香梨果脯">
+                <p>玉露香梨果脯</p>
+            </div>
+            <div class="derivative-product">
+                <img src="衍生2.jpg" alt="玉露香梨膏">
+                <p>玉露香梨膏</p>
+            </div>
+            <div class="derivative-product">
+                <img src="衍生3.jpg" alt="玉露香梨罐头">
+                <p>玉露香梨罐头</p>
+            </div>
+            <div class="derivative-product">
+                <img src="衍生4.jpg" alt="玉露香梨汁">
+                <p>玉露香梨汁</p>
+            </div>
+            <div class="derivative-product">
+                <img src="衍生6.jpg" alt="玉露香梨茶">
+                <p>玉露香梨茶</p>
+            </div>
+            <div class="derivative-product">
+                <img src="衍生5.jpg" alt="玉露香梨酒">
+                <p>玉露香梨酒</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 文创周边 -->
+    <section id="cultural-products" class="section">
+        <h2 data-title="文创周边"></h2>
+        <div class="cultural-products">
+            <img src="文创1.jpg" alt="文创周边图片 1">
+            <img src="文创2.jpg" alt="文创周边图片 2">
+            <img src="文创3.jpg" alt="文创周边图片 3">
+            <img src="文创4.jpg" alt="文创周边图片 4">
+            <img src="文创5.jpg" alt="文创周边图片 5">
+            <img src="文创6.jpg" alt="文创周边图片 6">
+            <img src="文创7.jpg" alt="文创周边图片 7">
+            <img src="文创8.jpg" alt="文创周边图片 8">
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact-us" class="section">
+        <h2 data-title="联系我们"></h2>
+        <form>
+            <label for="name">姓名</label>
+            <input type="text" id="name" required>
+            <label for="contact">联系方式</label>
+            <input type="text" id="contact" required>
+            <label for="message">留言</label>
+            <textarea id="message" required></textarea>
+            <input type="submit" value="提交">
+        </form>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 史大合村玉露香梨项目团队. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // 导航栏滚动变色
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+                // 同时修改 logo 容器的背景颜色
+                const logoContainer = document.querySelector('.logo-container');
+                logoContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                header.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+                // 同时修改 logo 容器的背景颜色
+                const logoContainer = document.querySelector('.logo-container');
+                logoContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+            }
+        });
+
+        // 板块滚动淡入效果
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
+
+        // 自动滚动图片
+        function setupAutoSlider(sliderId, interval) {
+            const slider = document.getElementById(sliderId);
+            const images = slider.children.length;
+            const slideWidth = slider.children[0].offsetWidth;
+            let currentIndex = 0;
+
+            function slide() {
+                currentIndex = (currentIndex + 1) % images;
+                slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            }
+
+            setInterval(slide, interval);
+        }
+
+        setupAutoSlider('origin-slider', 5000);
+        setupAutoSlider('product-slider', 5000);
+
+        // 动态添加 IP 形象和标题
+        const headers = document.querySelectorAll('h2[data-title]');
+        const ipImageSrc = 'IP.jpg';
+        headers.forEach(header => {
+            const title = header.dataset.title;
+            const ipImage = document.createElement('img');
+            ipImage.src = ipImageSrc;
+            ipImage.className = 'ip-image';
+            ipImage.alt = 'IP 形象';
+            header.appendChild(ipImage);
+            const titleText = document.createTextNode(title);
+            header.appendChild(titleText);
+        });
+    </script>
+</body>
+
+</html>
